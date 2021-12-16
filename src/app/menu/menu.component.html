@@ -1,41 +1,29 @@
-<div class="container" 
-fxLayout="column"
-fxLayoutGap="10px">
-
+<!-- 
+  fxLayout is used by angular to set the flex layout to horizontal or vertical
+  column = vertical
+  row = horizontal
+-->
+<div class="container" fxLayout="column" fxLayoutGap="10px">
+    <!-- 
+        mat-list = angular material list component, 
+        mat-list is like the media object from bootstrap 
+        fxFlex = means that the component will be a single piece
+    -->
     <div fxFlex>
         <div>
-            <h3>Munu</h3>
+            <h3>Menu</h3>
             <hr>
         </div>
     </div>
-
     <div fxFlex>
-        <mat-grid-list fxFlex cols="2" rowHeight="200px">
+        <mat-grid-list cols="2" rowHeight="200px">
             <mat-grid-tile *ngFor="let dish of dishes">
-                <img height="200px" src="{{dish.image}}" alt="{{dish.name}}">
+                <img height="200px" src={{dish.image}} alt={{dish.name}}>
                 <mat-grid-tile-footer>
-                    <h1 matLine>{{dish.name | uppercase}}</h1>
+                    <h1 mat-line>{{ dish.name | uppercase }}</h1>
                 </mat-grid-tile-footer>
             </mat-grid-tile>
         </mat-grid-list>
     </div>
-
-    <div fxFlex *ngIf="selectedDish">
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>
-                    <h3>{{selectedDish.name | uppercase}}</h3>
-                </mat-card-title>
-            </mat-card-header>
-            <img mat-card-image src="{{selectedDish.image}}" alt="{{selectedDish.name}}">
-            <mat-card-content>
-                <p>{{selectedDish.description}}</p>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-button>LIKE</button>
-                <button mat-button>SHARE</button>
-            </mat-card-actions>
-        </mat-card>
-    </div>
-
+    <app-dishdetail></app-dishdetail>
 </div>
