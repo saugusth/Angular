@@ -42,7 +42,33 @@
         <p>{{comments.rating}} Stars</p>
         <p>-- {{comments.author}} {{comments.date | date}}</p>
     </mat-list>
+    <p [hidden]="commentForm.invalid">{{commentForm.value| json}} {{commentForm.status| json}}</p>
+    <form novalidate [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+      <p>
+        <mat-form-field class="full-width">
+          <input matInput formControlName="author" placeholder="Name" type="text" required>
+          <mat-hint>
+            <span [hidden]="!(formError.author)">
+                {{formError.author}}</span>
+          </mat-hint>
+        </mat-form-field>            
+      </p>
+      <p>
+        <mat-slider formControlName="rating" thumbLabel tickInterval="1" min="1" max="5" step="1" value="5"></mat-slider>   
+      </p>
+      <p>
+        <mat-form-field class="full-width">
+          <textarea matInput formControlName="comment" placeholder="Your Comment" rows="12" required></textarea>
+          <mat-hint>
+            <span [hidden]="!(formError.comment)">
+                {{formError.comment}}</span>
+          </mat-hint>
+        </mat-form-field>
+      </p>
+      <button type="submit" mat-button class="background-primary text-floral-white" [disabled]="commentForm.invalid">Submit</button>
+    </form>
   </div>
+
   <div fxFlex [hidden]="dish">
     <mat-spinner></mat-spinner><h3>Loading . . . Please Wait!</h3>
   </div>
