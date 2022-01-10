@@ -3,23 +3,31 @@ import { LEADERS } from '../shared/leaders';
 import { Leader } from '../shared/leader';
 import { of, Observable } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import {HttpClient} from '@angular/common/http';
+import {baseURL} from '../shared/baseurl';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LeaderService {
   
-  getLeaders(): Leader[]{
-    return LEADERS;
+  constructor(private http: HttpClient) {}
+
+  getLeaders(): Observable<Leader[]> {
+    return this.http.get<Leader[]>(baseURL + 'leadership');
   }
 
-  getLeader(id: string): Observable<Leader>{
-    return of(LEADERS.filter((leader) =>(leader.id === id))[0]).pipe(delay(2000));
+  getLeader(id: number): Observable<Leader> {
+    return this.http.get<Leader>(baseURL + 'leadership/' + id);
   }
 
-  getFeaturedLeader(): Observable<Leader>{
-    return of(LEADERS.filter((leader) => (leader.featured))[0]).pipe(delay(2000))
+  getFeaturedleader(): Observable<Leader> {
+    return this.http.get<Leader[]>(baseURL + 'leadership?featured=true').pipe(map(leaders => leaders[0]));
+  }
+
+  getleaderIds(): Observable<number[] | any> {
+    return this.getLeaders().pipe(map(leaders => leaders.map(leader => leader.id)));
   }
   
-  constructor() { }
 }

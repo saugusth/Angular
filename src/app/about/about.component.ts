@@ -18,11 +18,14 @@ import { flyInOut } from '../animations/app.animations';
 export class AboutComponent implements OnInit {
 
   leaders: Leader[];
+  errMess: string;
 
   constructor(private leaderservice: LeaderService) { }
 
   ngOnInit(): void {
-    this.leaders = this.leaderservice.getLeaders();
+    this.leaderservice.getLeaders()
+      .subscribe(leaders => this.leaders = leaders ,
+        errmess => this.errMess = <any>errmess);
   }
 
 }
